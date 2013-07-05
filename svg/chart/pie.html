@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Pie Chart</title>
+        <link href="pie.css" rel="stylesheet" />
+        <script src="../raphael.js"></script>
+        <script src="../dv.js"></script>
+        <script src="pie.js"></script>
+        <script>
+			dv.select(document).ready(function(){
+				new dv.chart.Pie({
+					"x": 10,
+					"y": 10,
+					"width": 950,
+					"height": 500,
+					"series": {
+						"data": [15,35,50,40],
+						"radius": 200,
+						"format": {"sufix": "%"}
+					}
+				});
+				/*var r = dv.select("#vis").append("svg").attr({
+					"width": 950,
+					"height": 500
+				});
+				r.append("rect").attr({
+					"x": 90	
+				});*/
+			});
+		</script>
+    </head>
+    <body>
+    	M 250,250 L 108.57864376269052,391.4213562373095 A 200,200 0 0 1 108.57864376269046,108.57864376269052 Z
+    	<div class="vis" id="vis" style="position:absolute; right:0; top:0; width:300px; height:300px;">
+        	<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            	<path d="M50 50 L22 80 A40 40 0 0 1 22 22 Z" fill="red" stroke="green" />
+            </svg>
+        </div>
+    </body>
+</html>

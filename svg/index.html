@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Pie Chart</title>
+        <script src="raphael.js"></script>
+       <!-- <script src="../../jquery-1.4.js"></script>-->
+        <script src="dv.js"></script>
+        <!--<script src="pie.js"></script>-->
+        <style>
+			p{ position:absolute; width:100px; height:100px; background-color:red;}
+		</style>
+        <script>
+			dv.select(document).ready(function(){
+				
+				var r = dv.select("#vis").append("svg").attr({
+					"width": 950,
+					"height": 500
+				});
+				var g = r.append("g").append("g");//.append("rect");
+				//console.log(r);
+				r.append("rect").attr({
+					"x": 90	
+				})//.animate({"x": 800}, 1000);
+				//console.log(r)
+				dv.selectAll("g").attr({
+					"x": 50	
+				}).append("circle").attr("fill", "red");//.animate({"cx": 1000}, 1000);
+				dv.selectAll(".vis").append("p");
+				dv.selectAll(".vis").append("p").css({
+					"width": "100px",
+					"height": "100px",
+					"left": "10px",
+					"top": "50px"
+				}).animate({"left": 800, "top": 200}, 1000, "-");
+				/*console.log(r.type)
+				console.log(g.type)*/
+				//g.append("ellipse");
+				//g.append("circle").animate({"cx": 500}, 500);
+				/*dv.select(".vis").append("p").attr({
+					"backgroundColor": "red",
+					"width": "100px",
+					"height": "100px",
+					"position": "absolute"
+				});//.animate({"left": 300}, 1000)*/
+			});
+		</script>
+    </head>
+    <body>
+    	<div class="vis" id="vis"></div>
+        <div></div>
+    	<!--<script>
+			var jQuery = (function() {
+
+// Define a local copy of jQuery
+var jQuery = function( selector, context ) {
+		return new jQuery.fn.init( selector, context );
+	},
+	quickExpr = /^(?:[^<]*(<[\w\W]+>)[^>]*$|#([\w\-]+)$)/,
+
+	// Is it a simple selector
+	isSimple = /^.[^:#\[\.,]*$/,
+	
+	// The functions to execute on DOM ready
+	readyList = [],
+
+	// The ready event handler
+	DOMContentLoaded
+
+jQuery.fn = jQuery.prototype = {
+	init: function( selector, context ) {
+		var match, elem, ret, doc;
+
+		// Handle $(""), $(null), or $(undefined)
+		if ( !selector ) {
+			return this;
+		}
+
+		// Handle $(DOMElement)
+		if ( selector.nodeType ) {
+			this.context = this[0] = selector;
+			this.length = 1;
+			return this;
+		}
+		
+		// The body element only exists once, optimize finding it
+		if ( selector === "body" && !context && document.body ) {
+			this.context = document;
+			this[0] = document.body;
+			this.selector = "body";
+			this.length = 1;
+			return this;
+		}
+
+		// Handle HTML strings
+		if ( typeof selector === "string" ) {
+			// Are we dealing with HTML string or an ID?
+			match = quickExpr.exec( selector );
+
+					elem = document.getElementById( match[2] );
+
+					// Check parentNode to catch when Blackberry 4.6 returns
+					// nodes that are no longer in the document #6963
+					if ( elem && elem.parentNode ) {
+						this.length = 1;
+						this[0] = elem;
+					}
+
+					this.context = document;
+					this.selector = selector;
+					return this;
+				}
+	},
+
+	// Start with an empty selector
+	selector: "",
+
+	jquery: "1.4.3",
+
+	length: 0,
+
+	size: function() {
+		return this.length;
+	},
+	splice: [].splice
+};
+
+// Give the init function the jQuery prototype for later instantiation
+jQuery.fn.init.prototype = jQuery.fn;
+
+jQuery.extend = jQuery.fn.extend = function() {
+	// copy reference to target object
+	var target = arguments[0] || {}, i = 1, length = arguments.length, deep = false, options, name, src, copy, copyIsArray;
+
+	// Handle a deep copy situation
+	if ( typeof target === "boolean" ) {
+		deep = target;
+		target = arguments[1] || {};
+		// skip the boolean and the target
+		i = 2;
+	}
+
+	// Handle case when target is a string or something (possible in deep copy)
+	if ( typeof target !== "object" && !jQuery.isFunction(target) ) {
+		target = {};
+	}
+
+	// extend jQuery itself if only one argument is passed
+	if ( length === i ) {
+		target = this;
+		--i;
+	}
+
+	for ( ; i < length; i++ ) {
+		// Only deal with non-null/undefined values
+		if ( (options = arguments[ i ]) != null ) {
+			// Extend the base object
+			for ( name in options ) {
+				src = target[ name ];
+				copy = options[ name ];
+
+				// Prevent never-ending loop
+				if ( target === copy ) {
+					continue;
+				}
+
+				// Recurse if we're merging plain objects or arrays
+				if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {
+					if ( copyIsArray ) {
+						copyIsArray = false;
+						clone = src && jQuery.isArray(src) ? src : [];
+
+					} else {
+						clone = src && jQuery.isPlainObject(src) ? src : {};
+					}
+
+					// Never move original objects, clone them
+					target[ name ] = jQuery.extend( deep, clone, copy );
+
+				// Don't bring in undefined values
+				} else if ( copy !== undefined ) {
+					target[ name ] = copy;
+				}
+			}
+		}
+	}
+
+	// Return the modified object
+	return target;
+};
+
+
+// All jQuery objects should point back to these
+rootjQuery = jQuery(document);
+
+// Cleanup functions for the document ready method
+if ( document.addEventListener ) {
+	DOMContentLoaded = function() {
+		document.removeEventListener( "DOMContentLoaded", DOMContentLoaded, false );
+		jQuery.ready();
+	};
+
+} else if ( document.attachEvent ) {
+	DOMContentLoaded = function() {
+		// Make sure body exists, at least, in case IE gets a little overzealous (ticket #5443).
+		if ( document.readyState === "complete" ) {
+			document.detachEvent( "onreadystatechange", DOMContentLoaded );
+			jQuery.ready();
+		}
+	};
+}
+return (window.jQuery = window.$ = jQuery);
+
+})();
+			console.log($("#vis"));			
+		</script>-->
+    </body>
+</html>
