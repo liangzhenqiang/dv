@@ -1,0 +1,15 @@
+{
+  "name": "dv",
+  "version": "1.0.0",
+  "description": "javascript dv",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flyend/dv.git"
+  },
+  "author": "flyend@126.com",
+  "license": "MIT",
+  "devDependencies": {
+  }
+}

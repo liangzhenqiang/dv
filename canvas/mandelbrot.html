@@ -1,0 +1,76 @@
+<!doctype>
+<html>
+	<head>
+        <title>Mandelbrot</title>
+        <script type="text/javascript">
+			var mandelbrot = function(canvas, width, height){
+				var width = Math.max(width | 0, 300),
+					height = Math.max(height | 0, 150);
+				var canvas = canvas,
+					context = canvas.getContext("2d");
+				function mandelbrot(){
+
+				}
+				mandelbrot.data = function(d){
+					return mandelbrot;
+				};
+				mandelbrot.draw = function(){
+					draw();
+				};
+				mandelbrot.redraw = function(){
+					this.draw();
+				};
+				//
+				function draw(){
+					var rgb = new Array(3);
+					var xmin = -2,
+						ymin = -2,
+						xscale = 4 / width,
+						yscale = 4 / height;
+					for(var i = 0; i < height; i++){
+						for(var j = 0; j < width; j++){
+							var cx = xmin + j * xscale,
+								cy = ymin + i * yscale;
+							var c = count(cx, cy);
+							rgb[0] = (c & 0x07) << 5;
+							rgb[1] = ((c >> 3) & 0x07) << 5;
+							rgb[2] = ((c >> 6) & 0x07) << 5;
+							setPixel(j, i, rgb);
+						}
+					}
+				}
+				//set pixel
+				function setPixel(x, y, color){
+					var pxWidth = 1,
+						pxHeight = 1;
+					context.fillStyle = "rgb(" + color[0] + "," + color[1] + "," + color[2] + ")";
+					context.fillRect(x * pxWidth, y * pxHeight, pxWidth, pxHeight);
+				}
+				//
+				function count(x, y){
+					var max = 512;
+					var zr = zi = 0;
+					var sqrt = 0,
+						c = 0;
+					while(sqrt < 4.0 && c < max){
+						var t = x + zr * zr - zi * zi;
+						zi = y + 2 * zr * zi;//y半径为2
+						zr = t;
+
+						sqrt = zr * zr + zi * zi;
+						c++;
+					}
+					return max - c;
+				}
+				return mandelbrot;
+			};
+        	document.addEventListener("DOMContentLoaded", function(){
+        		var canvas = document.getElementById("vis");
+        		mandelbrot(canvas, canvas.width, canvas.height).draw();
+        	});
+        </script>
+	</head>
+	<body>
+		<canvas id="vis" width="960" height="450"></canvas>
+	</body>
+</html>
